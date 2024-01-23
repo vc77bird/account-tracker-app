@@ -54,21 +54,17 @@ const App = () => {
   };
 
   const handleInputChange = (event, index) => {
-    const { name, type, checked, value, className } = event.target;
-    // Replace checkbox True/False with Checked
-    if (type === 'checkbox'){
-      console.log(event.target);
-    }
+    const { name, type, value } = event.target;
 
-    let newValue = type === 'checkbox' ? checked : value;
-    // Replace 't' in datafields with current date
-    newValue = className.includes('text-end') && value === 't' ?  getFormattedDate() : value;
+    event.target.value = name.startsWith("date_") && value.toLowerCase() === "t" ?
+                          getFormattedDate() :
+                          event.target.value;
 
     setFormDatas((prevFormDatas) => {
       const newFormDatas = [...prevFormDatas];
       newFormDatas[index] = {
         ...newFormDatas[index],
-        [name]: newValue,
+        // Replace checkbox True/False with Checked
         [name]: event.target[type === "checkbox" ? "checked" : "value"],
       };
     return newFormDatas;
@@ -87,15 +83,15 @@ const App = () => {
   };
 
   const handleNewFormInputChange = (event) => {
-    const { name, type, checked, value, className } = event.target;
-    // Replace checkbox True/False with Checked
-    let newValue = type === 'checkbox' ? checked : value;
-    // Replace 't' in datafields with current date
-    newValue = className.includes('text-end') && value === 't' ?  getFormattedDate() : value;
+    const { name, type, value } = event.target;
+
+    event.target.value = name.startsWith("date_") && value.toLowerCase() === "t" ?
+                          getFormattedDate() :
+                          event.target.value;
 
     setNewFormData((prevNewFormData) => ({
       ...prevNewFormData,
-      [name]: newValue,
+      // Replace checkbox True/False with Checked
       [name]: event.target[type === "checkbox" ? "checked" : "value"],
     }));
   };
@@ -151,7 +147,17 @@ const App = () => {
     <div className='container-fluid'>
       <nav className='navbar navbar-dark sticky-top bg-dark'>
         <div className='container-fluid text-info fw-bold'>
-          E-Reg Account Tracker
+          {`E-Reg Account Tracker 
+            | Total requests:   ${accounts.length} 
+            | Wait Activation:  ${accounts
+                                  .filter(x => x.date_account_created
+                                    && !(x.date_account_activated))
+                                  .length}
+            | Active accounts:  ${accounts
+                                  .filter(x => x.date_account_activated
+                                    && !(x.date_account_inactivated))
+                                  .length}`
+            }
         </div>
         {/* Header */}
         <div className='container-fluid fw-bold text-primary-emphasis'>
