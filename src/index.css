@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.btn_submit :hover {
+  color: gold;
+  cursor: pointer;
+}
+
+.btn_delete :hover {
+  color: crimson;
+  cursor: pointer;
+}
+
+.record:hover div input {
+  color: goldenrod;
+}
+
+.inactive {
+  color: dimgrey;
+}
+
+.sort-button {
+  color: goldenrod;
+}
+
+.sort-button:hover {
+  color: gold;
+  cursor: pointer;
+}
+
+.filter-active {
+  color: deepskyblue;
+}
+
+.filter-button:hover {
+  color: deepskyblue;
+  cursor: pointer;
+}
