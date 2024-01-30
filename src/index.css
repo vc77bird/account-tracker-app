@@ -40,10 +40,15 @@ code {
 }
 
 .filter-active {
-  color: deepskyblue;
+  color: gold;
 }
 
 .filter-button:hover {
+  color: deepskyblue;
+  cursor: pointer;
+}
+
+.copy-to-clipboard:hover {
   color: deepskyblue;
   cursor: pointer;
 }

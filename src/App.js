@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import api from './api'
+import api from './api.js'
 
 const App = () => {
   const [selectedAccountId, setSelectedAccountId] = useState(null);
@@ -143,6 +143,20 @@ const App = () => {
     return 'bi-arrow-down-up';
   };
 
+  const unsecuredCopyToClipboard = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus({preventScroll:true});
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  }
+
   return (
     <div className='container-fluid'>
       <nav className='navbar navbar-dark sticky-top bg-dark'>
@@ -268,27 +282,45 @@ const App = () => {
           <form onSubmit={(event) => handleFormSubmit(event, index)} key={account.id}>
             <div className={`form-group row g-2 align-items-center record record_${index}`}>
               <div className='col-2'>
-                <input
-                  type          = 'text'
-                  className     = {`form-control input-sm ${formDatas[index].date_account_inactivated ? 'inactive' : ''}`}
-                  id            = {`username_${account.id}`}
-                  name          = 'username'
-                  onChange      = {(event) => handleInputChange(event, index)}
-                  value         = {formDatas[index].username}
-                  required
-                />
+                <div className='input-group'>
+                  <div className='input-group-text'>
+                    <i 
+                      className="bi bi-clipboard-check copy-to-clipboard"
+                      onClick   = {() => unsecuredCopyToClipboard(accounts[index]['username'])}
+                      title='Click to copy to clipboard'>
+                    </i>
+                  </div>
+                  <input
+                    type          = 'text'
+                    className     = {`form-control input-sm ${formDatas[index].date_account_inactivated ? 'inactive' : ''}`}
+                    id            = {`username_${account.id}`}
+                    name          = 'username'
+                    onChange      = {(event) => handleInputChange(event, index)}
+                    value         = {formDatas[index].username}
+                    required
+                  />
+                </div>
               </div>
 
               <div className='col-2'>
-                <input
-                  type          = 'text'
-                  className     = {`form-control input-sm ${formDatas[index].date_account_inactivated ? 'inactive' : ''}`}
-                  id            = {`email_${account.id}`}
-                  name          = 'email'
-                  onChange      = {(event) => handleInputChange(event, index)}
-                  value         = {formDatas[index].email}
-                  required
-                />
+                <div className='input-group'>
+                  <div className='input-group-text'>
+                    <i 
+                      className="bi bi-clipboard-check copy-to-clipboard"
+                      onClick   = {() => unsecuredCopyToClipboard(accounts[index]['email'])}
+                      title='Click to copy to clipboard'>
+                    </i>
+                  </div>
+                  <input
+                    type          = 'text'
+                    className     = {`form-control input-sm ${formDatas[index].date_account_inactivated ? 'inactive' : ''}`}
+                    id            = {`email_${account.id}`}
+                    name          = 'email'
+                    onChange      = {(event) => handleInputChange(event, index)}
+                    value         = {formDatas[index].email}
+                    required
+                  />
+                  </div>
               </div>
 
               <div className='col-1'>
